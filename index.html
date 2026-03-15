@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziudith Rie'X · fake location</title>
+    <!-- Font Awesome 5 (icons) & Google Font (Poppins) for elegant look -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0b0f18 0%, #1a1f2e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            position: relative;
+        }
+
+        /* elegant glassmorphism card */
+        .card {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(20, 25, 38, 0.75);
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            border-radius: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(210, 180, 255, 0.15) inset;
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 35px 70px -8px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(210, 180, 255, 0.3) inset;
+            border-color: rgba(170, 140, 220, 0.2);
+        }
+
+        /* header with name */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .brand i {
+            font-size: 32px;
+            background: linear-gradient(135deg, #c4b5fd, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 4px 10px #8b5cf650);
+        }
+
+        .brand h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #f0eaff, #ddd6fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .brand span {
+            font-weight: 300;
+            font-size: 0.9rem;
+            color: #9aa4bf;
+            margin-left: auto;
+            background: rgba(255,255,255,0.02);
+            padding: 4px 12px;
+            border-radius: 60px;
+            border: 0.5px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(2px);
+        }
+
+        /* description */
+        .desc {
+            color: #b9c2da;
+            font-weight: 300;
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+            padding-left: 8px;
+            border-left: 3px solid #a78bfa80;
+            background: linear-gradient(90deg, #2d2f45, transparent);
+            padding: 10px 18px;
+            border-radius: 18px;
+            background: rgba(45, 40, 65, 0.3);
+        }
+
+        .desc i {
+            color: #c7b9ff;
+            margin-right: 8px;
+        }
+
+        /* input group */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .label-phone {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #c5cae8;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            margin-left: 5px;
+        }
+
+        .label-phone i {
+            color: #a88bff;
+            font-size: 1rem;
+        }
+
+        .phone-field {
+            display: flex;
+            align-items: center;
+            background: rgba(12, 15, 24, 0.7);
+            border-radius: 60px;
+            border: 1px solid #2f2e4a;
+            padding: 4px 4px 4px 20px;
+            transition: border 0.2s, box-shadow 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .phone-field:focus-within {
+            border-color: #b49aff;
+            box-shadow: 0 0 0 3px rgba(164, 128, 255, 0.25);
+        }
+
+        .phone-field i {
+            color: #9b87de;
+            font-size: 1.2rem;
+        }
+
+        .phone-field input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 16px 14px;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #f0ebff;
+            outline: none;
+        }
+
+        .phone-field input::placeholder {
+            color: #555b7a;
+            font-weight: 300;
+            font-size: 0.95rem;
+        }
+
+        .phone-field button {
+            background: linear-gradient(135deg, #382e5c, #241f3a);
+            border: 1px solid #524b7c;
+            color: #ddd6fe;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px #0b0819;
+        }
+
+        .phone-field button:hover {
+            background: linear-gradient(135deg, #4a3e72, #332d52);
+            color: white;
+            border-color: #8877cc;
+            transform: scale(1.02);
+        }
+
+        .phone-field button i {
+            color: #cdbdff;
+            font-size: 0.9rem;
+        }
+
+        /* fake location card result */
+        .location-card {
+            background: rgba(8, 10, 18, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 34px;
+            padding: 24px 22px;
+            border: 1px solid rgba(170, 140, 240, 0.2);
+            margin-top: 16px;
+            box-shadow: 0 15px 30px -15px #00000080, 0 0 0 1px #2d2640 inset;
+        }
+
+        .loc-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .loc-header i {
+            font-size: 28px;
+            color: #b7a2ff;
+            filter: drop-shadow(0 0 6px #7b62d9);
+        }
+
+        .loc-header h3 {
+            color: #ebe4ff;
+            font-weight: 500;
+            font-size: 1.35rem;
+        }
+
+        .loc-header span {
+            background: #2b2440;
+            padding: 4px 12px;
+            border-radius: 40px;
+            color: #cbb5ff;
+            font-size: 0.7rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #5e4f96;
+        }
+
+        /* gps style */
+        .gps-ring {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0 20px 0;
+            background: #0e0c1a;
+            padding: 12px 20px;
+            border-radius: 60px;
+            border: 1px solid #393257;
+        }
+
+        .gps-ring i {
+            font-size: 22px;
+            color: #56d9a0;
+            animation: pulse 1.8s infinite;
+        }
+
+        .gps-ring .coord {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #bbf0d0;
+            text-shadow: 0 0 8px #1ed5a0;
+        }
+
+        .gps-ring .latlng {
+            color: #99b0d4;
+            font-size: 0.9rem;
+            margin-left: auto;
+            display: flex;
+            gap: 5px;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; text-shadow: 0 0 0 #77f7c5; }
+            50% { opacity: 1; text-shadow: 0 0 10px #8effcf; }
+            100% { opacity: 0.6; text-shadow: 0 0 0 #77f7c5; }
+        }
+
+        /* address random */
+        .address-box {
+            background: #03050b80;
+            border-radius: 28px;
+            padding: 18px 20px;
+            margin-top: 16px;
+            border: 1px dashed #6d5b9e60;
+        }
+
+        .address-line {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .address-line i {
+            color: #ffd966;
+            font-size: 1.2rem;
+            margin-top: 4px;
+        }
+
+        .address-line p {
+            color: #e2daf2;
+            font-weight: 300;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .address-line strong {
+            color: #e2c7ff;
+            font-weight: 500;
+        }
+
+        .powered {
+            margin-top: 20px;
+            color: #575e83;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+            border-top: 1px solid #2b2640;
+            padding-top: 16px;
+        }
+
+        .powered i {
+            color: #9b8acf;
+        }
+
+        /* loading shimmer */
+        .shimmer {
+            color: transparent !important;
+            background: linear-gradient(90deg, #2c2740 0%, #4a4565 50%, #2c2740 100%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 40px;
+            display: inline-block;
+            min-width: 120px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error-message {
+            color: #ff9f9f;
+            background: #360f0f80;
+            border-radius: 40px;
+            padding: 10px 20px;
+            border: 1px solid #ff7878;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="brand">
+            <i class="fas fa-map-marked-alt"></i>
+            <h1>Ziudith Rie'X</h1>
+            <span><i class="fas fa-eye-slash"></i> stealth</span>
+        </div>
+
+        <div class="desc">
+            <i class="fas fa-shield-alt"></i> Fake GPS · acak koordinat & alamat global
+        </div>
+        <!-- Input nomor telepon -->
+        <div class="input-group">
+            <div class="label-phone">
+                <i class="fas fa-phone-alt"></i> <span>Nomor telepon (bebas)</span>
+            </div>
+            <div class="phone-field">
+                <i class="fas fa-sim-card"></i>
+                <input type="tel" id="phoneInput" placeholder="+62 8xx xxxx" value="+62 812 3456 7890">
+                <button id="generateBtn">
+                    <i class="fas fa-dice-d6"></i> Acak
+                </button>
+            </div>
+            <div id="errorContainer" class="error-message hidden">
+                <i class="fas fa-exclamation-triangle"></i> <span>Masukkan nomor telepon dulu</span>
+            </div>
+        </div>
+        
+        <!-- HASIL LOKASI + GPS -->
+        <div class="location-card" id="resultCard">
+            <div class="loc-header">
+                <i class="fas fa-location-dot"></i>
+                <h3>fakeloc · realtime</h3>
+                <span><i class="fas fa-globe"></i> GPS</span>
+            </div>
+
+            <!-- bagian gps coordinate dengan animasi -->
+            <div class="gps-ring" id="gpsBox">
+                <i class="fas fa-satellite-dish"></i>
+                <span class="coord" id="latLngDisplay">-6.2088, 106.8456</span>
+                <span class="latlng"><i class="fas fa-crosshairs"></i> LAT/LNG</span>
+            </div>
+
+            <!-- alamat lengkap acak -->
+            <div class="address-box" id="addressBox">
+                <div class="address-line">
+                    <i class="fas fa-map-pin"></i>
+                    <p id="addressText"><strong>📍 Alamat acak:</strong> Jl. Merdeka No. 45, Jakarta Pusat, 10110, Indonesia</p>
+                </div>
+            </div>
+
+            <!-- detail sinyal / palsu -->
+            <div class="powered">
+                <i class="fas fa-wifi"></i> sinyal aman · 12 satelit <i class="fas fa-circle" style="color: #6fe7b5; font-size: 0.4rem;"></i>
+                <i class="fas fa-microchip"></i> Ziudith Rie'X core v1
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // --- ELEMENTS ---
+            const phoneInput = document.getElementById('phoneInput');
+            const generateBtn = document.getElementById('generateBtn');
+            const errorDiv = document.getElementById('errorContainer');
+            const latLngSpan = document.getElementById('latLngDisplay');
+            const addressP = document.getElementById('addressText');
+            
+            // Simpan elemen untuk efek loading (optional)
+            const gpsBox = document.getElementById('gpsBox');
+            const addressBox = document.getElementById('addressBox');
+
+            // --- FAKE DATA POOLS (untuk alamat beragam) ---
+            const jalan = [
+                "Jl. Sudirman", "Jl. Thamrin", "Jl. Gatot Subroto", "Jl. Asia Afrika", 
+                "Jl. Suryopranoto", "Jl. Malioboro", "Jl. Braga", "Jl. Diponegoro",
+                "Jl. Pahlawan", "Jl. Veteran", "Jl. Ahmad Yani", "Jl. Gajah Mada",
+                "Jl. Hayam Wuruk", "Jl. Pemuda", "Jl. Kusuma Bangsa"
+            ];
+            const kota = [
+                "Jakarta", "Surabaya", "Bandung", "Medan", "Yogyakarta", "Semarang",
+                "Makassar", "Denpasar", "Palembang", "Batam", "Balikpapan", "Manado",
+                "Malang", "Bogor", "Tangerang", "Solo", "Padang", "Samarinda"
+            ];
+            const provinsi = [
+                "DKI Jakarta", "Jawa Barat", "Jawa Tengah", "Jawa Timur", "Sumatera Utara",
+                "Bali", "Sulawesi Selatan", "Lampung", "Sumatera Barat", "Riau",
+                "Kalimantan Timur", "Papua", "Banten", "DI Yogyakarta", "Aceh"
+            ];
+            const negara = [
+                "Indonesia", "Malaysia", "Thailand", "Vietnam", "Singapura", "Filipina",
+                "Australia", "Jepang", "Korea Selatan", "Amerika Serikat", "Brazil", "India"
+            ];
+
+            // Fungsi ambil acak dari array
+            function randomItem(arr) {
+                return arr[Math.floor(Math.random() * arr.length)];
+            }
+
+            // Generate random latitude & longitude (global, lebih bervariasi)
+            function randomLatLng() {
+                // range lintang -90..90, bujur -180..180
+                let lat = (Math.random() * 170 - 85).toFixed(6);  // -85..85
+                let lng = (Math.random() * 340 - 170).toFixed(6); // -170..170
+                return { lat, lng };
+            }
+
+            // Buat alamat random berdasarkan koordinat (tidak terkait beneran, hanya fake)
+            function generateRandomAddress(lat, lng) {
+                // Supaya lebih seru, kombinasikan elemen road, city, dll.
+                // kadang tambah nomor
+                const jalanRand = randomItem(jalan);
+                const nomor = Math.floor(Math.random() * 200) + 1;
+                const kotaRand = randomItem(kota);
+                const provRand = randomItem(provinsi);
+                const negaraRand = randomItem(negara);
+                const kodePos = Math.floor(10000 + Math.random() * 90000);
+
+                // membuat style: "Jl. Sudirman No.12, Jakarta, DKI Jakarta 12345, Indonesia"
+                // tambahan: jika lintang negatif / bujur barat bisa muncul variasi
+                let prefix = "";
+                if (lat.startsWith('-') && lng.startsWith('-')) prefix = "🌏 selatan-barat";
+                else if (lat.startsWith('-')) prefix = "🌏 selatan";
+                else if (lng.startsWith('-')) prefix = "🌏 barat";
+                else prefix = "🌏 utara-timur";
+
+                return `${jalanRand} No.${nomor}, ${kotaRand}, ${provRand} ${kodePos}, ${negaraRand} · ${prefix}`;
+            }
+
+            // fungsi utama generate fake location berdasarkan nomor (nomor dipakai sebagai seed sederhana)
+            function generateFakeLocation(phoneNumber) {
+                // Gunakan nomor sebagai seed sederhana (jumlah karakter + kode)
+                let seed = 0;
+                if (phoneNumber) {
+                    for (let i = 0; i < phoneNumber.length; i++) {
+                        seed += phoneNumber.charCodeAt(i);
+                    }
+                } else {
+                    seed = Math.floor(Math.random() * 9999);
+                }
+
+                // random tapi terpengaruh seed (gunakan seed untuk mengubah Math.random sementara)
+                // Simpan fungsi random asli
+                const originalRandom = Math.random;
+                // pseudo random generator sederhana berdasarkan seed
+                function seededRandom(seedVal) {
+                    let x = Math.sin(seedVal) * 10000;
+                    return x - Math.floor(x);
+                }
+
+                // Kita generate beberapa nilai dengan seed, namun agar tidak mengganggu keseluruhan,
+                // kita gunakan pendekatan hybrid: hasil random berbeda tiap kali, namun tetap terpengaruh phone.
+                // caranya kita manipulasi dengan seed offset.
+                // Agar setiap nomor bisa beda, kita kombinasikan time + seed.
+                const timeOffset = new Date().getTime() % 1000; 
+                const finalSeed = seed + timeOffset;
+
+                // Gunakan "manual" random dengan seed
+                let fakeRand = function() {
+                    let x = Math.sin(finalSeed + Math.random() * 1000) * 10000;
+                    return x - Math.floor(x);
+                };
+
+                // Tapi supaya lebih sederhana, kita pakai Math.random biasa karena "acak" total, 
+                // tapi setiap klik pasti beda. Jika mau efek lebih "terkait nomor", bisa:
+                // kita gunakan nomor untuk memilih salah satu jalan secara "dependen"
+                // Tapi lebih baik gunakan full random sesuai permintaan : "langsung mencari alamat mengacak" 
+                // jadi hasil acak total setiap kali generate. tetap fresh.
+                
+                // Jadi kita abaikan seed khusus, langsung random penuh.
+                // Namun kita sempatkan untuk menghasilkan lat/lng yang tetap fresh.
+                
+                const { lat, lng } = randomLatLng();
+                const address = generateRandomAddress(lat, lng);
+
+                return { lat, lng, address };
+            }
+
+            // fungsi utama saat klik / generate
+            function updateLocation() {
+                // Ambil nomor telepon
+                let phone = phoneInput.value.trim();
+                
+                // Validasi jika kosong
+                if (phone === '') {
+                    errorDiv.classList.remove('hidden');
+                    // sembunyikan setelah 3 detik
+                    setTimeout(() => {
+                        errorDiv.classList.add('hidden');
+                    }, 2800);
+                    return;
+                } else {
+                    errorDiv.classList.add('hidden');
+                }
+
+                // Efek loading kecil (opsional)
+                latLngSpan.innerHTML = '<span class="shimmer" style="min-width:150px; display:inline-block;"> </span>';
+                addressP.innerHTML = '<span class="shimmer" style="min-width:200px; display:inline-block;"> </span>';
+
+                // Simulasi proses sebentar (biar kaya loading)
+                setTimeout(() => {
+                    // Generate lokasi baru
+                    const { lat, lng, address } = generateFakeLocation(phone);
+                    
+                    // Update tampilan
+                    latLngSpan.textContent = `${lat}, ${lng}`;
+                    // Buat teks alamat dengan perbaikan styling
+                    addressP.innerHTML = `<strong>📍 Alamat acak:</strong> ${address}`;
+
+                    // tambah efek GPS tambahan kecil (opsional)
+                }, 300); // delay 300 ms
+            }
+
+            // event listener
+            generateBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                updateLocation();
+            });
+
+            // biarkan user tekan enter di input
+            phoneInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    generateBtn.click();
+                }
+            });
+
+            // Isi pertama kali saat halaman dimuat (default dari value input)
+            window.addEventListener('load', function() {
+                // langsung generate untuk isi awal berdasarkan value default
+                setTimeout(() => {
+                    updateLocation();
+                }, 200);
+            });
+
+            // sedikit efek agar saat nomor diketik, error hilang
+            phoneInput.addEventListener('input', function() {
+                errorDiv.classList.add('hidden');
+            });
+        })();
+    </script>
+</body>
+</html>
