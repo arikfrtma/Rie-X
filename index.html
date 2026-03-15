@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziudith Rie'X · trace</title>
+    <!-- Font Awesome 5 & Google Font Poppins -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 30% 10%, #0e0c1a, #03020a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        /* main card */
+        .card {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(12, 15, 28, 0.8);
+            backdrop-filter: blur(18px) saturate(200%);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px;
+            border: 1px solid rgba(210, 190, 255, 0.15);
+            box-shadow: 0 40px 80px -15px #000000cc, 0 0 0 1px #2d264a inset;
+            padding: 32px 28px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .brand i {
+            font-size: 2.4rem;
+            background: linear-gradient(145deg, #d1b3ff, #9f7aff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .brand h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ede7ff, #cfb3ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .brand span {
+            margin-left: auto;
+            background: #201d34;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #b1a2e6;
+            border: 1px solid #5f4e9b;
+        }
+
+        /* tab navigation */
+        .tab-bar {
+            display: flex;
+            gap: 16px;
+            background: #0d0b18;
+            padding: 8px;
+            border-radius: 80px;
+            margin-bottom: 32px;
+            border: 1px solid #312d4a;
+        }
+
+        .tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 8px;
+            border-radius: 60px;
+            background: transparent;
+            color: #8f88b5;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .tab i {
+            font-size: 1.2rem;
+        }
+
+        .tab.active {
+            background: linear-gradient(145deg, #342d55, #1e193a);
+            color: white;
+            box-shadow: 0 6px 14px #00000066;
+            border: 1px solid #a17fd9;
+        }
+
+        /* panel konten */
+        .panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .panel.active-panel {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0.4; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* input group */
+        .label {
+            color: #bfb5e6;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 400;
+        }
+
+        .phone-field, .file-field {
+            background: #0c0920cc;
+            border-radius: 60px;
+            border: 1px solid #423c66;
+            padding: 4px 4px 4px 24px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 28px;
+            backdrop-filter: blur(5px);
+        }
+
+        .phone-field input, .file-field input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 18px 12px;
+            font-size: 1.05rem;
+            color: #f0e6ff;
+            outline: none;
+        }
+
+        .phone-field input::placeholder {
+            color: #5d537b;
+        }
+
+        .phone-field button, .file-field button {
+            background: #322b50;
+            border: 1px solid #6d5baa;
+            color: #ddd0ff;
+            padding: 14px 30px;
+            border-radius: 60px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .phone-field button:hover, .file-field button:hover {
+            background: #423a68;
+            color: white;
+            border-color: #a28bff;
+        }
+
+        /* file upload area styling */
+        .file-field {
+            padding: 4px 4px 4px 20px;
+        }
+        .file-field input[type="file"] {
+            padding: 14px 8px;
+            color: #cdc2f0;
+        }
+        .file-field input[type="file"]::file-selector-button {
+            display: none;
+        }
+
+        .error-message {
+            background: #2e1428cc;
+            border: 1px solid #ff7b8b;
+            color: #ffc0cb;
+            padding: 12px 20px;
+            border-radius: 60px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* animasi bumi */
+        .earth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0 20px;
+        }
+
+        .earth {
+            width: 100px;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="%2326497b" stroke="%235b8cbf" stroke-width="2"/><path d="M20 30 Q 40 20 60 30 Q 80 40 75 60 Q 65 80 45 75 Q 25 70 30 45 Q 28 35 20 30" fill="%233f8520" opacity="0.7"/><path d="M70 25 Q 88 32 82 50 Q 78 68 60 70 Q 45 75 35 60 Q 25 48 38 35 Q 48 25 70 25" fill="%23339933" opacity="0.6"/><circle cx="30" cy="30" r="5" fill="%23f4f9ff" opacity="0.3"/><circle cx="75" cy="70" r="8" fill="%23f4f9ff" opacity="0.3"/></svg>') no-repeat center/contain;
+            border-radius: 50%;
+            box-shadow: 0 0 30px #4066b0;
+            animation: rotateEarth 4s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .earth.spinning {
+            animation-play-state: running;
+        }
+
+        @keyframes rotateEarth {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .trace-result {
+            background: #0b0820dd;
+            border-radius: 32px;
+            padding: 22px;
+            border: 1px solid #5b4790;
+            margin: 18px 0 10px;
+            backdrop-filter: blur(8px);
+        }
+
+        .ip-row, .loc-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px dashed #383162;
+        }
+
+        .loc-row:last-child {
+            border-bottom: none;
+        }
+
+        .ip-row i, .loc-row i {
+            width: 28px;
+            color: #bfa6ff;
+            font-size: 1.3rem;
+        }
+
+        .ip-row span, .loc-row span {
+            color: #e7deff;
+            font-weight: 400;
+        }
+
+        .ip-value, .loc-value {
+            margin-left: auto;
+            background: #201d34;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-family: 'Courier New', monospace;
+            color: #b9f3d5;
+            border: 1px solid #59856b;
+        }
+
+        .loc-value {
+            color: #d5bdff;
+            border-color: #7e64b0;
+        }
+
+        .photo-hint {
+            color: #a494d0;
+            font-size: 0.9rem;
+            margin: 5px 0 15px;
+            font-style: italic;
+        }
+
+        .small-note {
+            color: #5e5490;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 0.75rem;
+            border-top: 1px solid #292346;
+            padding-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="brand">
+            <i class="fas fa-street-view"></i>
+            <h1>Ziudith Rie'X</h1>
+            <span><i class="fas fa-shield-alt"></i> private trace</span>
+        </div>
+
+        <!-- Tab navigasi -->
+        <div class="tab-bar">
+            <div class="tab active" data-tab="phoneTab"><i class="fas fa-phone-alt"></i> Lacak via Nomor</div>
+            <div class="tab" data-tab="photoTab"><i class="fas fa-camera"></i> Lacak via Photo</div>
+        </div>
+
+        <!-- Panel 1: via nomor -->
+        <div id="phonePanel" class="panel active-panel">
+            <div class="label"><i class="fas fa-hashtag"></i> Masukkan nomor telepon</div>
+            <div class="phone-field">
+                <i class="fas fa-sim-card" style="color:#a28bff;"></i>
+                <input type="tel" id="phoneInput" placeholder="contoh: 08123456789" value="08123456789">
+                <button id="tracePhoneBtn"><i class="fas fa-map-pin"></i> Lacak lokasi</button>
+            </div>
+            <div id="phoneError" class="error-message hidden"><i class="fas fa-exclamation-circle"></i> <span>Nomor tidak boleh kosong</span></div>
+
+            <!-- bumi + hasil (awalnya disembunyikan) -->
+            <div id="phoneEarthWrapper" style="text-align: center;" class="hidden">
+                <div class="earth-container">
+                    <div class="earth" id="earthPhone"></div>
+                </div>
+            </div>
+
+            <div id="phoneResultCard" class="trace-result hidden">
+                <div class="ip-row">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Alamat IP</span>
+                    <span class="ip-value" id="phoneIp">192.168.1.1</span>
+                </div>
+                <div class="loc-row">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Lokasi</span>
+                    <span class="loc-value" id="phoneLocation">Jakarta, Indonesia</span>
+                </div>
+                <div class="loc-row">
+                    <i class="fas fa-globe-asia"></i>
+                    <span>Koordinat</span>
+                    <span class="loc-value" id="phoneCoord">-6.2088, 106.8456</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel 2: via photo -->
+        <div id="photoPanel" class="panel">
+            <div class="label"><i class="fas fa-image"></i> Pilih foto untuk dilacak</div>
+            <div class="file-field">
+                <i class="fas fa-cloud-upload-alt" style="color:#a28bff;"></i>
+                <input type="file" id="photoInput" accept="image/*">
+                <button id="tracePhotoBtn"><i class="fas fa-search-location"></i> Lacak photo</button>
+            </div>
+            <div class="photo-hint"><i class="fas fa-info-circle"></i> Foto akan dianalisis (simulasi metadata)</div>
+            <div id="photoError" class="error-message hidden"><i class="fas fa-exclamation-circle"></i> <span>Pilih file foto dulu</span></div>
+
+            <div id="photoEarthWrapper" style="text-align: center;" class="hidden">
+                <div class="earth-container">
+                    <div class="earth" id="earthPhoto"></div>
+                </div>
+            </div>
+
+            <div id="photoResultCard" class="trace-result hidden">
+                <div class="ip-row">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Alamat IP</span>
+                    <span class="ip-value" id="photoIp">192.168.1.1</span>
+                </div>
+                <div class="loc-row">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Lokasi</span>
+                    <span class="loc-value" id="photoLocation">Tokyo, Jepang</span>
+                </div>
+                <div class="loc-row">
+                    <i class="fas fa-globe-asia"></i>
+                    <span>Koordinat</span>
+                    <span class="loc-value" id="photoCoord">35.6895, 139.6917</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="small-note">
+            <i class="fas fa-microchip"></i> Ziudith Rie'X core v2 · data acak persisten per nomor/file
+            <i class="fas fa-lock" style="color: #b6a2ff;"></i>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ----- elemen tab -----
+            const tabs = document.querySelectorAll('.tab');
+            const panels = {
+                phone: document.getElementById('phonePanel'),
+                photo: document.getElementById('photoPanel')
+            };
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const target = tab.dataset.tab; // phoneTab / photoTab
+                    if (target === 'phoneTab') {
+                        panels.phone.classList.add('active-panel');
+                        panels.photo.classList.remove('active-panel');
+                    } else {
+                        panels.photo.classList.add('active-panel');
+                        panels.phone.classList.remove('active-panel');
+                    }
+                });
+            });
+
+            // ----- penyimpanan hasil per nomor (Map) -----
+            const phoneResultMap = new Map();      // key: nomor string (trim)
+            const photoResultMap = new Map();      // key: nama file (atau identifier sederhana)
+
+            // elemen phone
+            const phoneInput = document.getElementById('phoneInput');
+            const tracePhoneBtn = document.getElementById('tracePhoneBtn');
+            const phoneError = document.getElementById('phoneError');
+            const phoneEarthWrapper = document.getElementById('phoneEarthWrapper');
+            const earthPhone = document.getElementById('earthPhone');
+            const phoneResultCard = document.getElementById('phoneResultCard');
+            const phoneIp = document.getElementById('phoneIp');
+            const phoneLocation = document.getElementById('phoneLocation');
+            const phoneCoord = document.getElementById('phoneCoord');
+
+            // elemen photo
+            const photoInput = document.getElementById('photoInput');
+            const tracePhotoBtn = document.getElementById('tracePhotoBtn');
+            const photoError = document.getElementById('photoError');
+            const photoEarthWrapper = document.getElementById('photoEarthWrapper');
+            const earthPhoto = document.getElementById('earthPhoto');
+            const photoResultCard = document.getElementById('photoResultCard');
+            const photoIp = document.getElementById('photoIp');
+            const photoLocation = document.getElementById('photoLocation');
+            const photoCoord = document.getElementById('photoCoord');
+
+            // ----- helper: random IP dan lokasi (konsisten berdasarkan seed) -----
+            function getConsistentLocation(seed) {
+                // seed harus string, dibuat hash angka sederhana
+                let hash = 0;
+                for (let i = 0; i < seed.length; i++) {
+                    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+                    hash |= 0; // convert to 32bit int
+                }
+                // ambil nilai absolut
+                hash = Math.abs(hash);
+
+                // kumpulan IP
+                const ipPrefixes = ['192.168.', '10.0.', '172.16.', '203.0.113.', '198.51.100.'];
+                const ipChunks = [ '1', '5', '12', '33', '47', '84', '101', '210', '77', '184' ];
+                const ip = ipPrefixes[hash % ipPrefixes.length] + 
+                          (hash % 255) + '.' + 
+                          (ipChunks[hash % ipChunks.length]);
+
+                // kumpulan lokasi (kota, negara)
+                const locations = [
+                    'Jakarta, Indonesia', 'Bangkok, Thailand', 'Kuala Lumpur, Malaysia',
+                    'Singapura', 'Manila, Filipina', 'Ho Chi Minh, Vietnam',
+                    'Tokyo, Jepang', 'Seoul, Korea Selatan', 'Beijing, Tiongkok',
+                    'Mumbai, India', 'Dubai, UEA', 'Moskow, Rusia',
+                    'London, Inggris', 'New York, AS', 'Los Angeles, AS',
+                    'Sydney, Australia', 'Sao Paulo, Brasil', 'Lagos, Nigeria',
+                    'Cairo, Mesir', 'Roma, Italia', 'Paris, Prancis'
+                ];
+                const locIndex = hash % locations.length;
+                const location = locations[locIndex];
+
+                // koordinat random tapi konsisten
+                const baseLat = (hash % 180 - 90) + (hash % 1000)/1000;
+                const baseLng = ((hash >> 4) % 360 - 180) + (hash % 1000)/1000;
+                const lat = baseLat.toFixed(6);
+                const lng = baseLng.toFixed(6);
+                const coord = `${lat}, ${lng}`;
+
+                return { ip, location, coord };
+            }
+
+            // ----- animasi bumi & tampilkan hasil setelah putaran -----
+            function spinEarthAndShow(earthElement, wrapper, resultCard, dataCallback, displayCallback) {
+                // sembunyikan result card dulu, munculkan bumi
+                resultCard.classList.add('hidden');
+                wrapper.classList.remove('hidden');
+                earthElement.classList.add('spinning');
+
+                // setelah 2.8 detik (berhenti berputar)
+                setTimeout(() => {
+                    earthElement.classList.remove('spinning');
+                    // ambil data via callback
+                    const data = dataCallback();
+                    // update display
+                    displayCallback(data);
+                    // sembunyikan bumi, tunjukkan result
+                    wrapper.classList.add('hidden');
+                    resultCard.classList.remove('hidden');
+                }, 2800); // berhenti setelah putaran
+            }
+
+            // ----- trace via nomor -----
+            tracePhoneBtn.addEventListener('click', () => {
+                const rawPhone = phoneInput.value.trim();
+                if (rawPhone === '') {
+                    phoneError.classList.remove('hidden');
+                    setTimeout(() => phoneError.classList.add('hidden'), 2000);
+                    return;
+                }
+                phoneError.classList.add('hidden');
+
+                // cek apakah nomor sudah pernah di-trace
+                let locationData;
+                if (phoneResultMap.has(rawPhone)) {
+                    locationData = phoneResultMap.get(rawPhone);
+                } else {
+                    locationData = getConsistentLocation(rawPhone);
+                    phoneResultMap.set(rawPhone, locationData);
+                }
+
+                // fungsi untuk mendapatkan data (saat animasi selesai)
+                const dataCallback = () => locationData;
+
+                const displayCallback = (data) => {
+                    phoneIp.innerText = data.ip;
+                    phoneLocation.innerText = data.location;
+                    phoneCoord.innerText = data.coord;
+                };
+
+                // jalankan spin
+                spinEarthAndShow(earthPhone, phoneEarthWrapper, phoneResultCard, dataCallback, displayCallback);
+            });
+
+            // agar saat enter di input phone, trigger
+            phoneInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    tracePhoneBtn.click();
+                }
+            });
+
+            // ----- trace via photo -----
+            tracePhotoBtn.addEventListener('click', () => {
+                const file = photoInput.files[0];
+                if (!file) {
+                    photoError.classList.remove('hidden');
+                    setTimeout(() => photoError.classList.add('hidden'), 2000);
+                    return;
+                }
+                photoError.classList.add('hidden');
+
+                // buat identifier dari nama file + size (semi-unik)
+                const fileIdentifier = file.name + '_' + file.size; 
+
+                let locationData;
+                if (photoResultMap.has(fileIdentifier)) {
+                    locationData = photoResultMap.get(fileIdentifier);
+                } else {
+                    // seed dari nama file + size + timestamp untuk variasi, tapi konsisten
+                    const seed = file.name + file.size + file.lastModified;
+                    locationData = getConsistentLocation(seed);
+                    photoResultMap.set(fileIdentifier, locationData);
+                }
+
+                const dataCallback = () => locationData;
+                const displayCallback = (data) => {
+                    photoIp.innerText = data.ip;
+                    photoLocation.innerText = data.location;
+                    photoCoord.innerText = data.coord;
+                };
+
+                spinEarthAndShow(earthPhoto, photoEarthWrapper, photoResultCard, dataCallback, displayCallback);
+            });
+
+            // agar tidak ada efek aneh saat ganti file, reset hasil? tidak perlu, nanti tetap muncul sesuai file.
+            // namun kita bisa sembunyikan result card saat memilih file baru (optional)
+            photoInput.addEventListener('change', () => {
+                // ketika ganti file, sembunyikan result dan bumi
+                photoResultCard.classList.add('hidden');
+                photoEarthWrapper.classList.add('hidden');
+                earthPhoto.classList.remove('spinning');
+            });
+
+            // inisialisasi: sembunyikan semua hasil & bumi
+            phoneResultCard.classList.add('hidden');
+            phoneEarthWrapper.classList.add('hidden');
+            photoResultCard.classList.add('hidden');
+            photoEarthWrapper.classList.add('hidden');
+        })();
+    </script>
+</body>
+</html>
