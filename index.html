@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziudith Rie'X · trace indonesia</title>
+    <!-- Font Awesome 5 & Google Font Poppins -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0a0b14 0%, #1b1e2f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .card {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(15, 18, 30, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 215, 150, 0.15);
+            box-shadow: 0 40px 80px -10px #000000cc, 0 0 0 1px #4a3f6e inset;
+            padding: 32px 28px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .brand i {
+            font-size: 2.4rem;
+            background: linear-gradient(145deg, #ffb347, #ff8c42);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .brand h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #fff0d0, #ffd966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .brand span {
+            margin-left: auto;
+            background: #25213b;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #ffdb9d;
+            border: 1px solid #b88b4c;
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 16px;
+            background: #0f0d1f;
+            padding: 8px;
+            border-radius: 80px;
+            margin-bottom: 32px;
+            border: 1px solid #53497a;
+        }
+
+        .tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 8px;
+            border-radius: 60px;
+            background: transparent;
+            color: #b1a7d9;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .tab i {
+            font-size: 1.2rem;
+        }
+
+        .tab.active {
+            background: linear-gradient(145deg, #64509c, #3f2f6b);
+            color: white;
+            box-shadow: 0 6px 14px #00000066;
+            border: 1px solid #e5b96b;
+        }
+
+        .panel {
+            display: none;
+            animation: fade 0.4s ease;
+        }
+
+        .panel.active-panel {
+            display: block;
+        }
+
+        @keyframes fade {
+            0% { opacity: 0.4; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .label {
+            color: #e0cfb0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 400;
+        }
+
+        .phone-field, .file-field {
+            background: #0b0822cc;
+            border-radius: 60px;
+            border: 1px solid #8f76c4;
+            padding: 4px 4px 4px 24px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 28px;
+            backdrop-filter: blur(5px);
+        }
+
+        .phone-field input, .file-field input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 18px 12px;
+            font-size: 1.05rem;
+            color: #fff2dd;
+            outline: none;
+        }
+
+        .phone-field input::placeholder {
+            color: #877bb0;
+        }
+
+        .phone-field button, .file-field button {
+            background: #42396b;
+            border: 1px solid #dba959;
+            color: #ffefd0;
+            padding: 14px 30px;
+            border-radius: 60px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .phone-field button:hover, .file-field button:hover {
+            background: #5f5093;
+            color: white;
+            border-color: #ffc489;
+        }
+
+        .file-field input[type="file"] {
+            padding: 14px 8px;
+            color: #e5d6b0;
+        }
+        .file-field input[type="file"]::file-selector-button {
+            display: none;
+        }
+
+        .error-message {
+            background: #2d1b32cc;
+            border: 1px solid #ff966b;
+            color: #ffcdb1;
+            padding: 12px 20px;
+            border-radius: 60px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .earth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0 20px;
+        }
+
+        .earth {
+            width: 100px;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="%2326497b" stroke="%23d99b4c" stroke-width="2"/><path d="M20 30 Q 40 20 60 30 Q 80 40 75 60 Q 65 80 45 75 Q 25 70 30 45 Q 28 35 20 30" fill="%233f8520" opacity="0.7"/><path d="M70 25 Q 88 32 82 50 Q 78 68 60 70 Q 45 75 35 60 Q 25 48 38 35 Q 48 25 70 25" fill="%23339933" opacity="0.6"/><circle cx="30" cy="30" r="5" fill="%23f4f9ff" opacity="0.3"/><circle cx="75" cy="70" r="8" fill="%23f4f9ff" opacity="0.3"/></svg>') no-repeat center/contain;
+            border-radius: 50%;
+            box-shadow: 0 0 30px #bf8f40;
+            animation: rotateEarth 4s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .earth.spinning {
+            animation-play-state: running;
+        }
+
+        @keyframes rotateEarth {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .trace-result {
+            background: #0e0b27dd;
+            border-radius: 32px;
+            padding: 22px;
+            border: 1px solid #c9a259;
+            margin: 18px 0 10px;
+            backdrop-filter: blur(8px);
+        }
+
+        .ip-row, .loc-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px dashed #65508f;
+        }
+
+        .loc-row:last-child {
+            border-bottom: none;
+        }
+
+        .ip-row i, .loc-row i {
+            width: 28px;
+            color: #ffbc6e;
+            font-size: 1.3rem;
+        }
+
+        .ip-row span, .loc-row span {
+            color: #f3e1c2;
+            font-weight: 400;
+        }
+
+        .ip-value, .loc-value {
+            margin-left: auto;
+            background: #292345;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-family: 'Courier New', monospace;
+            color: #ffdea4;
+            border: 1px solid #b27a3a;
+        }
+
+        .loc-value {
+            color: #c7e0ff;
+            border-color: #6a80b0;
+        }
+
+        .photo-hint {
+            color: #cbb99b;
+            font-size: 0.9rem;
+            margin: 5px 0 15px;
+            font-style: italic;
+        }
+
+        .small-note {
+            color: #7d6aa8;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 0.75rem;
+            border-top: 1px solid #4a3f66;
+            padding-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="brand">
+            <i class="fas fa-map-marked-alt"></i>
+            <h1>Ziudith Rie'X</h1>
+            <span><i class="fas fa-flag"></i> indonesia only</span>
+        </div>
+
+        <!-- Tab navigasi -->
+        <div class="tab-bar">
+            <div class="tab active" data-tab="phoneTab"><i class="fas fa-phone-alt"></i> Lacak via Nomor</div>
+            <div class="tab" data-tab="photoTab"><i class="fas fa-camera"></i> Lacak via Photo</div>
+        </div>
+
+        <!-- Panel 1: via nomor -->
+        <div id="phonePanel" class="panel active-panel">
+            <div class="label"><i class="fas fa-hashtag"></i> Masukkan nomor telepon</div>
+            <div class="phone-field">
+                <i class="fas fa-sim-card" style="color:#ffbc6e;"></i>
+                <input type="tel" id="phoneInput" placeholder="contoh: 08123456789" value="08123456789">
+                <button id="tracePhoneBtn"><i class="fas fa-search-location"></i> Lacak lokasi</button>
+            </div>
+            <div id="phoneError" class="error-message hidden"><i class="fas fa-exclamation-circle"></i> <span>Nomor tidak boleh kosong</span></div>
+
+            <!-- bumi + hasil -->
+            <div id="phoneEarthWrapper" style="text-align: center;" class="hidden">
+                <div class="earth-container">
+                    <div class="earth" id="earthPhone"></div>
+                </div>
+            </div>
+
+            <div id="phoneResultCard" class="trace-result hidden">
+                <div class="ip-row">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Alamat IP</span>
+                    <span class="ip-value" id="phoneIp">192.168.1.1</span>
+                </div>
+                <div class="loc-row">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Lokasi (Indonesia)</span>
+                    <span class="loc-value" id="phoneLocation">Jakarta, DKI Jakarta</span>
+                </div>
+                <div class="loc-row">
+                    <i class="fas fa-globe-asia"></i>
+                    <span>Koordinat</span>
+                    <span class="loc-value" id="phoneCoord">-6.2088, 106.8456</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel 2: via photo -->
+        <div id="photoPanel" class="panel">
+            <div class="label"><i class="fas fa-image"></i> Pilih foto untuk dilacak</div>
+            <div class="file-field">
+                <i class="fas fa-cloud-upload-alt" style="color:#ffbc6e;"></i>
+                <input type="file" id="photoInput" accept="image/*">
+                <button id="tracePhotoBtn"><i class="fas fa-camera-retro"></i> Lacak photo</button>
+            </div>
+            <div class="photo-hint"><i class="fas fa-info-circle"></i> Foto akan dianalisis (simulasi metadata)</div>
+            <div id="photoError" class="error-message hidden"><i class="fas fa-exclamation-circle"></i> <span>Pilih file foto dulu</span></div>
+
+            <div id="photoEarthWrapper" style="text-align: center;" class="hidden">
+                <div class="earth-container">
+                    <div class="earth" id="earthPhoto"></div>
+                </div>
+            </div>
+
+            <div id="photoResultCard" class="trace-result hidden">
+                <div class="ip-row">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Alamat IP</span>
+                    <span class="ip-value" id="photoIp">192.168.1.1</span>
+                </div>
+                <div class="loc-row">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Lokasi (Indonesia)</span>
+                    <span class="loc-value" id="photoLocation">Bandung, Jawa Barat</span>
+                </div>
+                <div class="loc-row">
+                    <i class="fas fa-globe-asia"></i>
+                    <span>Koordinat</span>
+                    <span class="loc-value" id="photoCoord">-6.9147, 107.6098</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="small-note">
+            <i class="fas fa-microchip"></i> Ziudith Rie'X v3 · data konsisten per nomor/file · wilayah Indonesia
+            <i class="fas fa-lock" style="color: #ffae6a;"></i>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // TAB
+            const tabs = document.querySelectorAll('.tab');
+            const phonePanel = document.getElementById('phonePanel');
+            const photoPanel = document.getElementById('photoPanel');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    if (tab.dataset.tab === 'phoneTab') {
+                        phonePanel.classList.add('active-panel');
+                        photoPanel.classList.remove('active-panel');
+                    } else {
+                        photoPanel.classList.add('active-panel');
+                        phonePanel.classList.remove('active-panel');
+                    }
+                });
+            });
+
+            // DATA STORAGE
+            const phoneResultMap = new Map();      // nomor -> data
+            const photoResultMap = new Map();      // identifier file -> data
+
+            // Elemen phone
+            const phoneInput = document.getElementById('phoneInput');
+            const tracePhoneBtn = document.getElementById('tracePhoneBtn');
+            const phoneError = document.getElementById('phoneError');
+            const phoneEarthWrapper = document.getElementById('phoneEarthWrapper');
+            const earthPhone = document.getElementById('earthPhone');
+            const phoneResultCard = document.getElementById('phoneResultCard');
+            const phoneIp = document.getElementById('phoneIp');
+            const phoneLocation = document.getElementById('phoneLocation');
+            const phoneCoord = document.getElementById('phoneCoord');
+
+            // Elemen photo
+            const photoInput = document.getElementById('photoInput');
+            const tracePhotoBtn = document.getElementById('tracePhotoBtn');
+            const photoError = document.getElementById('photoError');
+            const photoEarthWrapper = document.getElementById('photoEarthWrapper');
+            const earthPhoto = document.getElementById('earthPhoto');
+            const photoResultCard = document.getElementById('photoResultCard');
+            const photoIp = document.getElementById('photoIp');
+            const photoLocation = document.getElementById('photoLocation');
+            const photoCoord = document.getElementById('photoCoord');
+
+            // ----- DATABASE LOKASI INDONESIA (34 provinsi + kota2 ikonik) -----
+            const indoLocations = [
+                { city: "Jakarta", province: "DKI Jakarta", lat: "-6.2088", lng: "106.8456" },
+                { city: "Surabaya", province: "Jawa Timur", lat: "-7.2575", lng: "112.7521" },
+                { city: "Bandung", province: "Jawa Barat", lat: "-6.9147", lng: "107.6098" },
+                { city: "Medan", province: "Sumatera Utara", lat: "3.5952", lng: "98.6722" },
+                { city: "Semarang", province: "Jawa Tengah", lat: "-6.9935", lng: "110.4203" },
+                { city: "Makassar", province: "Sulawesi Selatan", lat: "-5.1477", lng: "119.4327" },
+                { city: "Palembang", province: "Sumatera Selatan", lat: "-2.9761", lng: "104.7754" },
+                { city: "Denpasar", province: "Bali", lat: "-8.6705", lng: "115.2126" },
+                { city: "Yogyakarta", province: "DI Yogyakarta", lat: "-7.7956", lng: "110.3695" },
+                { city: "Banjarmasin", province: "Kalimantan Selatan", lat: "-3.3186", lng: "114.5944" },
+                { city: "Pontianak", province: "Kalimantan Barat", lat: "-0.0263", lng: "109.3425" },
+                { city: "Samarinda", province: "Kalimantan Timur", lat: "-0.4948", lng: "117.1436" },
+                { city: "Manado", province: "Sulawesi Utara", lat: "1.4748", lng: "124.8421" },
+                { city: "Padang", province: "Sumatera Barat", lat: "-0.9471", lng: "100.4172" },
+                { city: "Pekanbaru", province: "Riau", lat: "0.5071", lng: "101.4478" },
+                { city: "Banda Aceh", province: "Aceh", lat: "5.5483", lng: "95.3238" },
+                { city: "Mataram", province: "Nusa Tenggara Barat", lat: "-8.5833", lng: "116.1167" },
+                { city: "Kupang", province: "Nusa Tenggara Timur", lat: "-10.1772", lng: "123.6070" },
+                { city: "Ambon", province: "Maluku", lat: "-3.6954", lng: "128.1814" },
+                { city: "Jayapura", province: "Papua", lat: "-2.5337", lng: "140.7181" },
+                { city: "Sorong", province: "Papua Barat", lat: "-0.8645", lng: "131.2532" },
+                { city: "Mamuju", province: "Sulawesi Barat", lat: "-2.6807", lng: "118.8861" },
+                { city: "Kendari", province: "Sulawesi Tenggara", lat: "-3.9985", lng: "122.5129" },
+                { city: "Palu", province: "Sulawesi Tengah", lat: "-0.8917", lng: "119.8707" },
+                { city: "Gorontalo", province: "Gorontalo", lat: "0.5333", lng: "123.0667" },
+                { city: "Tanjung Selor", province: "Kalimantan Utara", lat: "2.8375", lng: "117.3653" },
+                { city: "Palangka Raya", province: "Kalimantan Tengah", lat: "-2.2105", lng: "113.9201" },
+                { city: "Bengkulu", province: "Bengkulu", lat: "-3.8004", lng: "102.2656" },
+                { city: "Jambi", province: "Jambi", lat: "-1.5900", lng: "103.6100" },
+                { city: "Bandar Lampung", province: "Lampung", lat: "-5.4292", lng: "105.2618" },
+                { city: "Pangkal Pinang", province: "Kepulauan Bangka Belitung", lat: "-2.1290", lng: "106.1138" },
+                { city: "Tanjung Pinang", province: "Kepulauan Riau", lat: "0.9169", lng: "104.4431" },
+                { city: "Serang", province: "Banten", lat: "-6.1200", lng: "106.1503" },
+                { city: "Mamasa", province: "Sulawesi Barat", lat: "-2.9644", lng: "119.3864" } // tambahan variasi
+            ];
+
+            // IP indonesia (prefix umum)
+            const indoIPPrefixes = [
+                "36.76.", "39.210.", "103.111.", "110.138.", "114.4.", "115.178.", "118.96.",
+                "119.252.", "120.164.", "125.160.", "180.241.", "182.1.", "202.152.", "203.130.",
+                "210.16.", "222.124."
+            ];
+
+            // Fungsi hash sederhana dari string
+            function simpleHash(str) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                    hash |= 0;
+                }
+                return Math.abs(hash);
+            }
+
+            // Dapatkan data lokasi indonesia berdasarkan seed
+            function getIndoLocationData(seed) {
+                const hash = simpleHash(seed);
+                
+                // pilih lokasi dari daftar indonesia
+                const locIndex = hash % indoLocations.length;
+                const loc = indoLocations[locIndex];
+                
+                // buat IP
+                const ipPrefix = indoIPPrefixes[hash % indoIPPrefixes.length];
+                const ipSuffix = (hash % 255) + "." + ((hash >> 4) % 255);
+                const ip = ipPrefix + ipSuffix;
+                
+                // format lokasi: "Kota, Provinsi"
+                const location = `${loc.city}, ${loc.province}`;
+                const coord = `${loc.lat}, ${loc.lng}`;
+                
+                return { ip, location, coord };
+            }
+
+            // Animasi bumi dan tampilkan hasil
+            function spinEarthAndShow(earthElement, wrapper, resultCard, dataCallback, displayCallback) {
+                resultCard.classList.add('hidden');
+                wrapper.classList.remove('hidden');
+                earthElement.classList.add('spinning');
+
+                setTimeout(() => {
+                    earthElement.classList.remove('spinning');
+                    const data = dataCallback();
+                    displayCallback(data);
+                    wrapper.classList.add('hidden');
+                    resultCard.classList.remove('hidden');
+                }, 2800);
+            }
+
+            // ----- PHONE TRACE -----
+            tracePhoneBtn.addEventListener('click', () => {
+                const rawPhone = phoneInput.value.trim();
+                if (rawPhone === '') {
+                    phoneError.classList.remove('hidden');
+                    setTimeout(() => phoneError.classList.add('hidden'), 2000);
+                    return;
+                }
+                phoneError.classList.add('hidden');
+
+                let locationData;
+                if (phoneResultMap.has(rawPhone)) {
+                    locationData = phoneResultMap.get(rawPhone);
+                } else {
+                    locationData = getIndoLocationData(rawPhone);
+                    phoneResultMap.set(rawPhone, locationData);
+                }
+
+                const dataCallback = () => locationData;
+                const displayCallback = (d) => {
+                    phoneIp.innerText = d.ip;
+                    phoneLocation.innerText = d.location;
+                    phoneCoord.innerText = d.coord;
+                };
+
+                spinEarthAndShow(earthPhone, phoneEarthWrapper, phoneResultCard, dataCallback, displayCallback);
+            });
+
+            phoneInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    tracePhoneBtn.click();
+                }
+            });
+
+            // ----- PHOTO TRACE -----
+            tracePhotoBtn.addEventListener('click', () => {
+                const file = photoInput.files[0];
+                if (!file) {
+                    photoError.classList.remove('hidden');
+                    setTimeout(() => photoError.classList.add('hidden'), 2000);
+                    return;
+                }
+                photoError.classList.add('hidden');
+
+                const fileIdentifier = file.name + '_' + file.size; 
+
+                let locationData;
+                if (photoResultMap.has(fileIdentifier)) {
+                    locationData = photoResultMap.get(fileIdentifier);
+                } else {
+                    const seed = file.name + file.size + (file.lastModified || '0');
+                    locationData = getIndoLocationData(seed);
+                    photoResultMap.set(fileIdentifier, locationData);
+                }
+
+                const dataCallback = () => locationData;
+                const displayCallback = (d) => {
+                    photoIp.innerText = d.ip;
+                    photoLocation.innerText = d.location;
+                    photoCoord.innerText = d.coord;
+                };
+
+                spinEarthAndShow(earthPhoto, photoEarthWrapper, photoResultCard, dataCallback, displayCallback);
+            });
+
+            photoInput.addEventListener('change', () => {
+                photoResultCard.classList.add('hidden');
+                photoEarthWrapper.classList.add('hidden');
+                earthPhoto.classList.remove('spinning');
+            });
+
+            // Inisialisasi hidden
+            phoneResultCard.classList.add('hidden');
+            phoneEarthWrapper.classList.add('hidden');
+            photoResultCard.classList.add('hidden');
+            photoEarthWrapper.classList.add('hidden');
+        })();
+    </script>
+</body>
+</html>
